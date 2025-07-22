@@ -1,0 +1,50 @@
+---
+- name: Install tasks
+  ansible.builtin.import_tasks: docker_install.yml
+  tags:
+    - install
+
+- name: Setup tasks
+  ansible.builtin.import_tasks: docker_setup.yml
+  tags:
+    - install
+    - setup
+
+- name: "Check if docker unit exists"
+  ansible.builtin.stat:
+    path: "{{ docker_systemd_service_file }}"
+  register: service_status
+  tags:
+    - install
+    - uninstall
+    - setup
+    - start
+    - stop
+
+- name: "Enable and restart docker service"
+  ansible.builtin.systemd:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: "{{ docker_service_name }}"
+  when: service_status.stat.exists
+  tags:
+    - install
+    - setup
+    - start
+
+- name: "Stop docker service"
+  ansible.builtin.systemd:
+    state: stopped
+    enabled: false
+    daemon_reload: true
+    name: "{{ docker_service_name }}"
+  when: service_status.stat.exists
+  tags:
+    - uninstall
+    - stop
+
+- name: Uninstall tasks
+  ansible.builtin.import_tasks: docker_uninstall.yml
+  tags:
+    - uninstall

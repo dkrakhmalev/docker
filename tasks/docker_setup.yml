@@ -1,0 +1,19 @@
+---
+- name: Ensure /etc/apt/keyrings directory exists
+  ansible.builtin.file:
+    path: "{{ docker_apt_keyrings_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "{{ docker_gpg_url }}"
+    dest: "{{ docker_apt_keyrings_file }}"
+    mode: '0644'
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by={{ docker_apt_keyrings_file }}] {{ docker_apt_repository_url }} {{ ansible_lsb.codename }} stable"
+    filename: "{{ docker_unified_name }}"
+    state: present
+    update_cache: true

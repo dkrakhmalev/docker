@@ -1,0 +1,17 @@
+{
+  "service": {
+    "id": "{{ docker_unified_name }}",
+    "name": "{{ docker_unified_name }}",
+    "tags": ["{{ docker_unified_name }}", "container", "engine"],
+    "port": {{ docker_listen_port }},
+    "checks": [
+      {
+        "id": "{{ docker_unified_name }}_check",
+        "name": "HTTP Request on port {{ docker_listen_port }}",
+        "http": "http://127.0.0.1:{{ docker_listen_port }}/",
+        "interval": "60s",
+        "timeout": "3s"
+      }
+    ]
+  }
+}

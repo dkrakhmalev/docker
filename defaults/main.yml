@@ -1,0 +1,5 @@
+---
+docker_package_state: present
+docker_remove_data: false
+docker_users: []
+docker_listen_port: "2375"

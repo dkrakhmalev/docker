@@ -1,0 +1,10 @@
+---
+docker_unified_name: "docker"
+docker_service_name: "{{ docker_unified_name }}"
+docker_consul_directory: "/etc/consul.d"
+docker_consul_conf_file: "{{ docker_consul_directory }}/docker.json"
+docker_systemd_service_file: "/etc/systemd/system/{{ docker_service_name }}.service"
+docker_apt_keyrings_directory: "/etc/apt/keyrings/"
+docker_apt_keyrings_file: "/etc/apt/keyrings/docker.asc"
+docker_apt_repository_url: "https://download.docker.com/linux/ubuntu"
+docker_gpg_url: "https://download.docker.com/linux/ubuntu/gpg"

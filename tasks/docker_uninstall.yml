@@ -1,0 +1,39 @@
+---
+- name: Remove Docker packages
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: absent
+    purge: true
+
+- name: Remove Docker APT repository
+  file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
+
+- name: Remove Docker GPG key
+  file:
+    path: "{{ docker_apt_keyrings_file }}"
+    state: absent
+
+- name: "Remove docker user and group"
+  ansible.builtin.user:
+    name: "{{ docker_unified_name }}"
+    state: absent
+    groups: absent
+
+# - name: Optionally remove Docker data
+#   file:
+#     path: /var/lib/docker
+#     state: absent
+#   when: docker_remove_data | default(false)
+
+# - name: Optionally remove containerd data
+#   file:
+#     path: /var/lib/containerd
+#     state: absent
+#   when: docker_remove_data | default(false)

@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: dkrakhmalev
+  namespace: devops
+  description: Install Docker
+  company: Handyweb
+
+  license: GPL-3.0-only
+  min_ansible_version: "2.1"
+
+  min_ansible_container_version: "2.0"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+
+  galaxy_tags:
+    - docker

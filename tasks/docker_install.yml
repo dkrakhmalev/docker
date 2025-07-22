@@ -1,0 +1,32 @@
+---
+- name: "Ensure group docker exists"
+  ansible.builtin.group:
+    name: "{{ docker_unified_name }}"
+    state: present
+
+- name: "Create docker user"
+  ansible.builtin.user:
+    name: "{{ docker_unified_name }}"
+    shell: /bin/false
+    group: "{{ docker_unified_name }}"
+    create_home: false
+    state: present
+
+- name: Install required system packages
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: true
+
+- name: Install Docker packages
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true
