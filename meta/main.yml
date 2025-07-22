@@ -3,7 +3,7 @@ galaxy_info:
   author: dkrakhmalev
   namespace: devops
   description: Install Docker
-  company: Handyweb
+  company: my_company
 
   license: GPL-3.0-only
   min_ansible_version: "2.1"
